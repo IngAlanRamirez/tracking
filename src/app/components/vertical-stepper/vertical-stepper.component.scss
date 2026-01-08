@@ -1,13 +1,299 @@
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scaleIn{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:scale(1)}}
-@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-.vertical-stepper{display:flex;flex-direction:column;width:100%;padding:0 1rem;&--ending .vertical-stepper__step:not(:last-child) .vertical-stepper__icon-container .vertical-stepper__icon:not(.vertical-stepper__icon--pending)::before{border-color:var(--color-success)!important;border-style:solid!important}}
-.vertical-stepper__step{display:flex;flex-direction:row;align-items:flex-start;position:relative;min-height:90px;padding-bottom:1rem;animation:fadeInUp .5s ease-out backwards;@for $i from 1 through 6{&:nth-child(#{$i}){animation-delay:#{$i*.1}s}}&--pending{align-items:center}&--last{min-height:80px;padding-bottom:0}&:not(:last-child)::after{content:'';position:absolute;left:19px;top:41px;bottom:-1rem;width:0;border-left:2px dashed var(--color-text-light);z-index:0}&--pending:not(:last-child)::after,&--in-progress:not(:last-child)::after{top:42px;bottom:-27px}&--current-success.vertical-stepper__step--next-success::after,&--current-success.vertical-stepper__step--next-cancel::after{border-left:2px solid var(--color-success)}&--current-success.vertical-stepper__step--next-in-progress::after{border-left:2px dashed var(--color-success)}&:not(:last-child) .vertical-stepper__icon--cancel::before{content:'';position:absolute;left:20px;top:41px;bottom:-1rem;width:0;border-left:2px solid var(--color-primary);z-index:0}}
-.vertical-stepper__icon-container{position:relative;display:flex;flex-direction:column;justify-content:flex-start;align-items:center;margin-right:12px;z-index:1}
-.vertical-stepper__icon{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0;ion-icon{font-size:20px}&--pending{width:20px;height:20px;background-color:var(--color-text-light);border:none;margin:0 10px;align-self:center}&--in-progress{border:2px solid var(--color-success);background-color:var(--color-clear);color:var(--color-success);animation:scaleIn .4s ease-out,pulse 2s ease-in-out infinite;ion-icon{color:var(--color-success);animation:pulse 2s ease-in-out infinite}}&--success{background-color:var(--color-success);border:2px solid var(--color-success);color:var(--color-clear);ion-icon{color:var(--color-clear)}&::before,&::after{display:none!important;content:none!important;visibility:hidden!important}}&--cancel{background-color:var(--color-primary);border:2px solid var(--color-primary);color:var(--color-clear);ion-icon{color:var(--color-clear)}}}
-.vertical-stepper__content{flex:1;margin-top:5px;position:relative;transition:opacity .3s ease-in-out,transform .3s ease-in-out;&--pending .vertical-stepper__title,&--pending .vertical-stepper__branch-name{color:var(--color-text-muted)}&--in-progress .vertical-stepper__title,&--success .vertical-stepper__title,&--cancel .vertical-stepper__title{color:var(--theme-light-text-text-01);font-weight:700}&--in-progress .vertical-stepper__branch-name,&--success .vertical-stepper__branch-name,&--cancel .vertical-stepper__branch-name{color:var(--color-text-secondary)}}
-.vertical-stepper__title{margin:0 0 4px 0;font-size:16px;font-weight:700;line-height:1.4;color:var(--theme-light-text-text-01)}
-.vertical-stepper__branch-name{font-size:14px;font-weight:400;line-height:1.4;color:var(--color-text-secondary);margin:4px 0}
-.vertical-stepper__description{font-size:14px;font-weight:400;line-height:1.4;color:var(--color-text-secondary);font-style:italic;margin:4px 0}
-.vertical-stepper__date{font-size:12px;font-weight:400;line-height:1.4;color:var(--color-text-muted);margin:4px 0 0 0}
-@media (max-width:576px){.vertical-stepper{padding:0 .75rem}.vertical-stepper__title{font-size:15px}.vertical-stepper__branch-name,.vertical-stepper__description{font-size:13px}}
+// Variables de colores
+$color-success: #00a859;
+$color-cancel: #ec0000;
+$color-pending: #d3d3d3;
+$color-text-default: #191919;
+$color-text-secondary: #666666;
+$color-text-muted: #999999;
+$color-background: #ffffff;
+
+// Block: vertical-stepper
+.vertical-stepper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1rem;
+
+  &--ending {
+    .vertical-stepper__step:not(:last-child) {
+      .vertical-stepper__icon-container {
+        .vertical-stepper__icon:not(.vertical-stepper__icon--pending)::before {
+          border-color: var(--color-success) !important;
+          border-style: solid !important;
+        }
+      }
+    }
+  }
+}
+
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+// Element: step
+.vertical-stepper__step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  min-height: 90px;
+  padding-bottom: 1rem;
+  animation: fadeInUp 0.5s ease-out backwards;
+
+  // Animación escalonada para cada paso
+  @for $i from 1 through 6 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
+
+  // Modifier: pending - centrar verticalmente el icono con el contenido
+  &--pending {
+    align-items: center;
+  }
+
+  // Modifier: last
+  &--last {
+    min-height: 80px;
+    padding-bottom: 0;
+  }
+
+  // Línea conectora por defecto (gris punteada)
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 41px;
+    bottom: -1rem;
+    width: 0;
+    border-left: 2px dashed var(--color-text-light);
+    z-index: 0;
+  }
+
+  // Línea conectora cuando el contenido es pending o in-progress
+  &--pending:not(:last-child)::after,
+  &--in-progress:not(:last-child)::after {
+    top: 42px;
+    bottom: -27px;
+  }
+
+  // Línea conectora: SUCCESS -> SUCCESS (verde continua)
+  &--current-success.vertical-stepper__step--next-success::after {
+    border-left: 2px solid var(--color-success);
+  }
+
+  // Línea conectora: SUCCESS -> IN_PROGRESS (verde punteada)
+  &--current-success.vertical-stepper__step--next-in-progress::after {
+    border-left: 2px dashed var(--color-success);
+  }
+
+  // Línea conectora: SUCCESS -> CANCEL (verde sólida)
+  &--current-success.vertical-stepper__step--next-cancel::after {
+    border-left: 2px solid var(--color-success);
+  }
+
+  // Línea conectora para cancel
+  &:not(:last-child) {
+    .vertical-stepper__icon--cancel::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 41px;
+      bottom: -1rem;
+      width: 0;
+      border-left: 2px solid var(--color-primary);
+      z-index: 0;
+    }
+  }
+}
+
+// Element: icon-container
+.vertical-stepper__icon-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 12px;
+  z-index: 1;
+}
+
+// Element: icon
+.vertical-stepper__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  // Modifier: pending
+  &--pending {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-text-light);
+    border: none;
+    margin: 0 10px;
+    align-self: center;
+  }
+
+  // Modifier: in-progress
+  &--in-progress {
+    border: 2px solid var(--color-success);
+    background-color: var(--color-clear);
+    color: var(--color-success);
+    animation: scaleIn 0.4s ease-out, pulse 2s ease-in-out infinite;
+
+    ion-icon {
+      color: var(--color-success);
+      animation: pulse 2s ease-in-out infinite;
+    }
+  }
+
+  // Modifier: success
+  &--success {
+    background-color: var(--color-success);
+    border: 2px solid var(--color-success);
+    color: var(--color-clear);
+
+    ion-icon {
+      color: var(--color-clear);
+    }
+
+    // Ocultar cualquier pseudo-elemento ::before y ::after
+    &::before,
+    &::after {
+      display: none !important;
+      content: none !important;
+      visibility: hidden !important;
+    }
+  }
+
+  // Modifier: cancel
+  &--cancel {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    color: var(--color-clear);
+
+    ion-icon {
+      color: var(--color-clear);
+    }
+  }
+}
+
+// Element: content
+.vertical-stepper__content {
+  flex: 1;
+  margin-top: 5px;
+  position: relative;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+
+  // Modifier: pending
+  &--pending {
+    .vertical-stepper__title,
+    .vertical-stepper__branch-name {
+      color: var(--color-text-muted);
+    }
+  }
+
+  // Modifier: in-progress, success, cancel
+  &--in-progress,
+  &--success,
+  &--cancel {
+    .vertical-stepper__title {
+      color: var(--theme-light-text-text-01);
+      font-weight: 700;
+    }
+
+    .vertical-stepper__branch-name {
+      color: var(--color-text-secondary);
+    }
+  }
+}
+
+// Element: title
+.vertical-stepper__title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--theme-light-text-text-01);
+}
+
+// Element: branch-name
+.vertical-stepper__branch-name {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  margin: 4px 0;
+}
+
+// Element: description
+.vertical-stepper__description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 4px 0;
+}
+
+// Element: date
+.vertical-stepper__date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .vertical-stepper {
+    padding: 0 0.75rem;
+  }
+
+  .vertical-stepper__title {
+    font-size: 15px;
+  }
+
+  .vertical-stepper__branch-name,
+  .vertical-stepper__description {
+    font-size: 13px;
+  }
+}
