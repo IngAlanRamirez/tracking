@@ -53,4 +53,13 @@ export class FaqPage implements OnInit, OnDestroy {
       }
     });
   }
+
+  /**
+   * Abre el dialer para llamar a Línea RockStar
+   */
+  callRockStarLine(): void {
+    // Número de teléfono de Línea RockStar (ajustar según necesidad)
+    const phoneNumber = 'tel:8001234567';
+    window.location.href = phoneNumber;
+  }
 }

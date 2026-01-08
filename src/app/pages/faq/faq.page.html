@@ -44,6 +44,18 @@
         <div [innerHTML]="item.answer"></div>
       </div>
     </div>
+
+    <!-- Botón de llamar -->
+    <div class="faq-page__call-button-container">
+      <ion-button
+        expand="block"
+        shape="round"
+        class="faq-page__call-button"
+        (click)="callRockStarLine()">
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        Llamar a Línea RockStar
+      </ion-button>
+    </div>
   </div>
 
   <!-- Mensaje cuando no hay FAQ disponible -->

@@ -13,7 +13,8 @@ import {
   helpCircleOutline,
   addOutline,
   removeOutline,
-  chevronBackOutline
+  chevronBackOutline,
+  callOutline
 } from 'ionicons/icons';
 
 import { routes } from './app/app.routes';
@@ -31,7 +32,8 @@ addIcons({
   'help-circle-outline': helpCircleOutline,
   'add-outline': addOutline,
   'remove-outline': removeOutline,
-  'chevron-back-outline': chevronBackOutline
+  'chevron-back-outline': chevronBackOutline,
+  'call-outline': callOutline
 });
 
 bootstrapApplication(AppComponent, {

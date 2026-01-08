@@ -13,12 +13,13 @@ $border-radius: 10px;
 .tracking-page {
   &__toolbar {
     --background: var(--color-clear);
-    --color: var(--color-primary);
+    --color: var(--theme-light-text-text-01);
   }
 
   &__title {
     font-weight: 700;
     font-size: 20px;
+    color: var(--theme-light-text-text-01);
   }
 
   // Element: help-button

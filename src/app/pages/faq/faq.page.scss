@@ -14,12 +14,17 @@ $transition-speed: 300ms;
 .faq-page {
   &__toolbar {
     --background: var(--color-clear);
-    --color: var(--color-primary);
+    --color: var(--theme-light-text-text-01);
+    
+    ion-title {
+      color: var(--theme-light-text-text-01) !important;
+    }
   }
 
   &__title {
     font-weight: 700;
     font-size: 20px;
+    color: var(--theme-light-text-text-01) !important;
   }
 
   &__back-button {
@@ -28,6 +33,14 @@ $transition-speed: 300ms;
 
   &__content {
     --background: var(--color-background);
+    
+    ion-header {
+      ion-toolbar {
+        ion-title {
+          color: var(--theme-light-text-text-01) !important;
+        }
+      }
+    }
   }
 
   // Element: container
@@ -144,6 +157,36 @@ $transition-speed: 300ms;
     p {
       color: var(--color-text-secondary);
       font-size: 16px;
+    }
+  }
+
+  // Element: call-button-container
+  &__call-button-container {
+    padding: $spacing-base $spacing-base $spacing-large;
+    margin-top: $spacing-base;
+  }
+
+  // Element: call-button
+  &__call-button {
+    --background: var(--color-primary);
+    --color: var(--color-clear);
+    --border-radius: #{$border-radius};
+    --padding-top: 14px;
+    --padding-bottom: 14px;
+    --box-shadow: none;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: none;
+    margin: 0;
+    box-shadow: none !important;
+
+    &:hover {
+      --background: #d40000;
+    }
+
+    ion-icon {
+      font-size: 20px;
+      margin-right: 4px;
     }
   }
 }
