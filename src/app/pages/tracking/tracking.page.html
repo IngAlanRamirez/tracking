@@ -1,0 +1,60 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="tracking-page__toolbar">
+    <ion-title class="tracking-page__title">Rastrea tu tarjeta</ion-title>
+    <ion-buttons slot="end" *ngIf="!isLoading && !error && !isOnlyInitialStateInProgress()">
+      <ion-button routerLink="/faq" class="tracking-page__help-button">
+        <ion-icon name="help-circle-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="tracking-page__content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Rastrea tu tarjeta</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="tracking-page__loading">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p class="tracking-page__loading-text">Cargando información...</p>
+  </div>
+
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="tracking-page__error">
+    <ion-icon name="alert-circle-outline" class="tracking-page__error-icon"></ion-icon>
+    <p class="tracking-page__error-message">{{ error }}</p>
+    <ion-button (click)="reload()" fill="outline" class="tracking-page__error-button">
+      Reintentar
+    </ion-button>
+  </div>
+
+  <!-- Content -->
+  <div *ngIf="!isLoading && !error" class="tracking-page__container">
+    <!-- Time Estimate -->
+    <div class="tracking-page__time-estimate">
+      <p class="tracking-page__time-estimate-text">
+        Tiempo estimado de entrega: <strong>10 días hábiles</strong>
+      </p>
+    </div>
+
+    <!-- Stepper -->
+    <div class="tracking-page__stepper-container">
+      <app-vertical-stepper [steps]="steps"></app-vertical-stepper>
+    </div>
+
+    <!-- Reload Button (for testing) -->
+    <div class="tracking-page__actions">
+      <ion-button
+        (click)="reload()"
+        fill="clear"
+        size="small"
+        class="tracking-page__reload-button">
+        <ion-icon slot="start" name="refresh-outline"></ion-icon>
+        Generar nuevo escenario
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

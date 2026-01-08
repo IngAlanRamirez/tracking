@@ -1,0 +1,292 @@
+// Variables de colores (BEM - Block)
+$color-success: #00a859;  // --color-success
+$color-cancel: #ec0000;    // --color-primary
+$color-pending: #d3d3d3;   // --color-text-light
+$color-text-default: #191919;  // --theme-light-text-text-01
+$color-text-secondary: #666666; // --color-text-secondary
+$color-text-muted: #999999;    // --color-text-muted
+$color-background: #ffffff;     // --color-clear
+
+// Block: vertical-stepper
+.vertical-stepper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 1rem;
+
+  // Modifier: ending
+  &--ending {
+    .vertical-stepper__step:not(:last-child) {
+      .vertical-stepper__icon-container {
+        .vertical-stepper__icon:not(.vertical-stepper__icon--pending)::before {
+          border-color: var(--color-success) !important;
+          border-style: solid !important;
+        }
+      }
+    }
+  }
+}
+
+// Element: step
+.vertical-stepper__step {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  position: relative;
+  min-height: 90px;
+  padding-bottom: 1rem;
+
+  // Modifier: pending - centrar verticalmente el icono con el contenido
+  &--pending {
+    align-items: center;
+  }
+
+  // Modifier: last
+  &--last {
+    min-height: 80px;
+    padding-bottom: 0;
+  }
+
+  // Línea conectora por defecto (gris punteada)
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 19px;
+    top: 41px;
+    bottom: -1rem;
+    width: 0;
+    border-left: 2px dashed var(--color-text-light);
+    z-index: 0;
+  }
+
+  // Línea conectora cuando el contenido es pending
+  &--pending:not(:last-child)::after {
+    top: 42px;
+    bottom: -27px;
+  }
+
+  // Línea conectora cuando el contenido es in-progress
+  &--in-progress:not(:last-child)::after {
+    top: 42px;
+    bottom: -27px;
+  }
+
+  // Línea conectora: SUCCESS -> SUCCESS (verde continua)
+  &--current-success.vertical-stepper__step--next-success::after {
+    border-left: 2px solid var(--color-success);
+  }
+
+  // Línea conectora: SUCCESS -> IN_PROGRESS (verde punteada)
+  &--current-success.vertical-stepper__step--next-in-progress::after {
+    border-left: 2px dashed var(--color-success);
+  }
+
+  // Línea conectora: SUCCESS -> CANCEL (verde sólida)
+  &--current-success.vertical-stepper__step--next-cancel::after {
+    border-left: 2px solid var(--color-success);
+  }
+
+  // Línea conectora para cancel
+  &:not(:last-child) {
+    .vertical-stepper__icon--cancel::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 41px;
+      bottom: -1rem;
+      width: 0;
+      border-left: 2px solid var(--color-primary);
+      z-index: 0;
+    }
+  }
+}
+
+// Element: icon-container
+.vertical-stepper__icon-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: 12px;
+  z-index: 1;
+}
+
+// Element: icon
+.vertical-stepper__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+
+  ion-icon {
+    font-size: 20px;
+  }
+
+  // Modifier: pending
+  &--pending {
+    width: 20px;
+    height: 20px;
+    background-color: var(--color-text-light);
+    border: none;
+    margin: 0 10px;
+    align-self: center;
+  }
+
+  // Modifier: in-progress
+  &--in-progress {
+    border: 2px solid var(--color-success);
+    background-color: var(--color-clear);
+    color: var(--color-success);
+
+    ion-icon {
+      color: var(--color-success);
+    }
+  }
+
+  // Modifier: success
+  &--success {
+    background-color: var(--color-success);
+    border: 2px solid var(--color-success);
+    color: var(--color-clear);
+
+    ion-icon {
+      color: var(--color-clear);
+    }
+
+    // Ocultar cualquier pseudo-elemento ::before y ::after
+    &::before {
+      display: none !important;
+      content: none !important;
+      visibility: hidden !important;
+    }
+
+    &::after {
+      display: none !important;
+      content: none !important;
+      visibility: hidden !important;
+    }
+  }
+
+  // Modifier: cancel
+  &--cancel {
+    background-color: var(--color-primary);
+    border: 2px solid var(--color-primary);
+    color: var(--color-clear);
+
+    ion-icon {
+      color: var(--color-clear);
+    }
+  }
+}
+
+// Element: content
+.vertical-stepper__content {
+  flex: 1;
+  margin-top: 5px;
+  position: relative;
+
+  // Modifier: pending
+  &--pending {
+    .vertical-stepper__title {
+      color: var(--color-text-muted);
+    }
+
+    .vertical-stepper__branch-name {
+      color: var(--color-text-muted);
+    }
+  }
+
+  // Modifier: in-progress
+  &--in-progress {
+    .vertical-stepper__title {
+      color: var(--theme-light-text-text-01);
+      font-weight: 700;
+    }
+
+    .vertical-stepper__branch-name {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  // Modifier: success
+  &--success {
+    .vertical-stepper__title {
+      color: var(--theme-light-text-text-01);
+      font-weight: 700;
+    }
+
+    .vertical-stepper__branch-name {
+      color: var(--color-text-secondary);
+    }
+  }
+
+  // Modifier: cancel
+  &--cancel {
+    .vertical-stepper__title {
+      color: var(--theme-light-text-text-01);
+      font-weight: 700;
+    }
+
+    .vertical-stepper__branch-name {
+      color: var(--color-text-secondary);
+    }
+  }
+}
+
+// Element: title
+.vertical-stepper__title {
+  margin: 0 0 4px 0;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--theme-light-text-text-01);
+}
+
+// Element: branch-name
+.vertical-stepper__branch-name {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  margin: 4px 0;
+}
+
+// Element: description
+.vertical-stepper__description {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 4px 0;
+}
+
+// Element: date
+.vertical-stepper__date {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-text-muted);
+  margin: 4px 0 0 0;
+}
+
+// Responsive adjustments
+@media (max-width: 576px) {
+  .vertical-stepper {
+    padding: 0 0.75rem;
+  }
+
+  .vertical-stepper__title {
+    font-size: 15px;
+  }
+
+  .vertical-stepper__branch-name,
+  .vertical-stepper__description {
+    font-size: 13px;
+  }
+}

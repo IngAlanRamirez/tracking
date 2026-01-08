@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar class="faq-page__toolbar">
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tracking" class="faq-page__back-button">
+        <ion-icon name="chevron-back-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="faq-page__title">Dudas generales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="faq-page__content">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Dudas generales</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="faq-page__container" *ngIf="faq.length > 0">
+    <div
+      *ngFor="let item of faq; let i = index; let isLast = last"
+      class="faq-page__item"
+      [class.faq-page__item--first]="i === 0"
+      [class.faq-page__item--last]="isLast"
+      [class.faq-page__item--only]="faq.length === 1">
+      
+      <!-- Pregunta -->
+      <div
+        class="faq-page__question"
+        (click)="toggleQuestion(item)">
+        <h3 class="faq-page__question-title">{{ item.question }}</h3>
+        <ion-icon
+          *ngIf="item.status !== undefined"
+          [name]="item.status ? 'remove-outline' : 'add-outline'"
+          class="faq-page__question-icon">
+        </ion-icon>
+      </div>
+
+      <!-- Respuesta -->
+      <div
+        class="faq-page__answer"
+        [class.faq-page__answer--open]="item.status"
+        [class.faq-page__answer--closed]="item.status === false">
+        <div [innerHTML]="item.answer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mensaje cuando no hay FAQ disponible -->
+  <div class="faq-page__empty" *ngIf="faq.length === 0">
+    <p>No hay preguntas frecuentes disponibles en este momento.</p>
+  </div>
+</ion-content>

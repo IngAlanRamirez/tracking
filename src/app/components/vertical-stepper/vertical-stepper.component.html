@@ -1,0 +1,53 @@
+<div class="vertical-stepper" [class.vertical-stepper--ending]="stepperEnding">
+  <div
+    *ngFor="let step of steps; let i = index; let isLast = last"
+    class="vertical-stepper__step"
+    [class.vertical-stepper__step--last]="isLast"
+    [class.vertical-stepper__step--next-success]="!isLast && steps[i + 1]?.status === 'SUCCESS'"
+    [class.vertical-stepper__step--next-in-progress]="!isLast && steps[i + 1]?.status === 'IN_PROGRESS'"
+    [class.vertical-stepper__step--next-cancel]="!isLast && steps[i + 1]?.status === 'CANCEL'"
+    [class.vertical-stepper__step--current-success]="step.status === 'SUCCESS'"
+    [class.vertical-stepper__step--pending]="step.status === 'PENDING'"
+    [class.vertical-stepper__step--in-progress]="step.status === 'IN_PROGRESS'">
+    
+    <!-- Icono del paso -->
+    <div class="vertical-stepper__icon-container">
+      <div
+        *ngIf="step.status === 'PENDING'"
+        class="vertical-stepper__icon vertical-stepper__icon--pending">
+      </div>
+      
+      <div
+        *ngIf="step.status !== 'PENDING'"
+        class="vertical-stepper__icon"
+        [ngClass]="getIconClass(step.status)">
+        <ion-icon [name]="step.icon"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Contenido del paso -->
+    <div
+      class="vertical-stepper__content"
+      [ngClass]="getContentClass(step.status)">
+      <h3 class="vertical-stepper__title">{{ step.title }}</h3>
+      
+      <p
+        *ngIf="step.branchName"
+        class="vertical-stepper__branch-name"
+        [innerHTML]="step.branchName">
+      </p>
+      
+      <p
+        *ngIf="step.description"
+        class="vertical-stepper__description">
+        {{ step.description }}
+      </p>
+      
+      <p
+        *ngIf="step.deliveryDate"
+        class="vertical-stepper__date">
+        {{ formatDate(step.deliveryDate) }}
+      </p>
+    </div>
+  </div>
+</div>
