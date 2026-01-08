@@ -20,7 +20,7 @@ import {
 import { routes } from './app/app.routes';
 import { AppComponent } from './app/app.component';
 
-// Registrar iconos globalmente
+// Registrar iconos globalmente antes de bootstrap
 addIcons({
   'card-outline': cardOutline,
   'send-outline': sendOutline,
