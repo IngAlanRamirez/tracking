@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
+import { IonIcon } from '@ionic/angular/standalone';
 import { Stepper } from '../../models/stepper.interface';
 import { DateFormatter } from '../../utils/date-formatter.util';
 
@@ -11,7 +11,7 @@ import { DateFormatter } from '../../utils/date-formatter.util';
 @Component({
   selector: 'app-vertical-stepper',
   standalone: true,
-  imports: [CommonModule, IonicModule],
+  imports: [CommonModule, IonIcon],
   templateUrl: './vertical-stepper.component.html',
   styleUrls: ['./vertical-stepper.component.scss']
 })

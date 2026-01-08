@@ -1,7 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent,
+  IonSpinner
+} from '@ionic/angular/standalone';
 import { TrackingFacadeService } from '../../services/tracking-facade.service';
 import { Stepper } from '../../models/stepper.interface';
 import { VerticalStepperComponent } from '../../components/vertical-stepper/vertical-stepper.component';
@@ -13,7 +22,19 @@ import { DeliveryType } from '../../models/delivery-type.enum';
 @Component({
   selector: 'app-tracking',
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule, VerticalStepperComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent,
+    IonSpinner,
+    VerticalStepperComponent
+  ],
   templateUrl: './tracking.page.html',
   styleUrls: ['./tracking.page.scss']
 })

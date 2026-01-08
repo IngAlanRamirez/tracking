@@ -1,7 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonButton,
+  IonIcon,
+  IonContent
+} from '@ionic/angular/standalone';
 import { FAQ_DATA } from '../../constants/faq.data';
 import { Faq } from '../../models/faq.interface';
 import { DeliveryType } from '../../models/delivery-type.enum';
@@ -12,7 +20,17 @@ import { DeliveryType } from '../../models/delivery-type.enum';
 @Component({
   selector: 'app-faq',
   standalone: true,
-  imports: [CommonModule, IonicModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    IonHeader,
+    IonToolbar,
+    IonTitle,
+    IonButtons,
+    IonButton,
+    IonIcon,
+    IonContent
+  ],
   templateUrl: './faq.page.html',
   styleUrls: ['./faq.page.scss']
 })
