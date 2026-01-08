@@ -27,6 +27,38 @@ $color-background: #ffffff;     // --color-clear
   }
 }
 
+// Animaciones
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
 // Element: step
 .vertical-stepper__step {
   display: flex;
@@ -35,6 +67,14 @@ $color-background: #ffffff;     // --color-clear
   position: relative;
   min-height: 90px;
   padding-bottom: 1rem;
+  animation: fadeInUp 0.5s ease-out backwards;
+
+  // Animación escalonada para cada paso
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      animation-delay: #{$i * 0.1}s;
+    }
+  }
 
   // Modifier: pending - centrar verticalmente el icono con el contenido
   &--pending {
@@ -142,9 +182,11 @@ $color-background: #ffffff;     // --color-clear
     border: 2px solid var(--color-success);
     background-color: var(--color-clear);
     color: var(--color-success);
+    animation: scaleIn 0.4s ease-out, pulse 2s ease-in-out infinite;
 
     ion-icon {
       color: var(--color-success);
+      animation: pulse 2s ease-in-out infinite;
     }
   }
 
@@ -189,6 +231,7 @@ $color-background: #ffffff;     // --color-clear
   flex: 1;
   margin-top: 5px;
   position: relative;
+  transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 
   // Modifier: pending
   &--pending {

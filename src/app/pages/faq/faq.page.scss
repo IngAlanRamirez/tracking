@@ -48,6 +48,29 @@ $transition-speed: 300ms;
     padding: $spacing-small $spacing-base;
   }
 
+  // Animaciones
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 1000px;
+      opacity: 1;
+    }
+  }
+
   // Element: item
   &__item {
     display: flex;
@@ -55,6 +78,13 @@ $transition-speed: 300ms;
     background-color: var(--color-clear);
     padding: $spacing-base;
     margin-bottom: 2px;
+    animation: fadeInUp 0.3s ease-out backwards;
+
+    @for $i from 1 through 10 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 0.05}s;
+      }
+    }
 
     // Modifier: first
     &--first {
@@ -97,6 +127,11 @@ $transition-speed: 300ms;
       font-size: 24px;
       color: var(--color-primary);
       flex-shrink: 0;
+      transition: transform 0.3s ease-out;
+
+      &:hover {
+        transform: scale(1.1);
+      }
     }
   }
 
@@ -179,14 +214,25 @@ $transition-speed: 300ms;
     text-transform: none;
     margin: 0;
     box-shadow: none !important;
+    transition: transform 0.2s ease-out, background-color 0.2s ease-out;
 
     &:hover {
       --background: #d40000;
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(0) scale(0.98);
     }
 
     ion-icon {
       font-size: 20px;
       margin-right: 4px;
+      transition: transform 0.2s ease-out;
+    }
+
+    &:hover ion-icon {
+      transform: scale(1.1);
     }
   }
 }
