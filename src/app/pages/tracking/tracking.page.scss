@@ -85,6 +85,42 @@ $border-radius: 10px;
     animation: fadeInUp 0.5s ease-out;
   }
 
+  // Element: card-image-container
+  &__card-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: $spacing-large;
+    animation: fadeInUp 0.5s ease-out 0.1s backwards;
+  }
+
+  // Element: card-image-circle
+  &__card-image-circle {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 6px;
+    overflow: hidden;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  // Element: card-image
+  &__card-image {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+  }
+
   // Animaciones
   @keyframes fadeInUp {
     from {

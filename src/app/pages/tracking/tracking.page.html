@@ -33,6 +33,17 @@
 
   <!-- Content -->
   <div *ngIf="!isLoading && !error" class="tracking-page__container">
+    <!-- Card Image -->
+    <div class="tracking-page__card-image-container">
+      <div class="tracking-page__card-image-circle">
+        <img 
+          src="assets/card.png" 
+          alt="Tarjeta" 
+          class="tracking-page__card-image"
+          onerror="this.style.display='none'">
+      </div>
+    </div>
+
     <!-- Time Estimate -->
     <div class="tracking-page__time-estimate">
       <p class="tracking-page__time-estimate-text">
